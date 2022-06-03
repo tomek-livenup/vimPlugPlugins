@@ -1,0 +1,60 @@
+*lsc-dart*  Language Server Client config for Dart
+
+INTRODUCTION                                    *lsc-dart-intro*
+
+vim-lsc-dart configures the vim-lsc plugin to run the Dart Analysis Server for
+`dart` and `yaml` file types. This plugin requires either `dart` or `flutter` to
+exist on your path.
+
+See https://github.com/natebosch/vim-lsc for information about the vim-lsc
+plugin.
+
+
+CONFIGURATION                                   *lsc-dart-configure*
+
+                                                *lsc-dart-configure-log*
+                                                *g:lsc_dart_enable_log*
+Enable the Analysis Server instrumentation log file by setting
+`g:lsc_dart_enable_log` to `v:true`. When enabled the analysis server will write
+a log to a new temp file. This file will get cleaned up at vim exit.
+
+                                                *g:lsc_dart_enable_completion_ml*
+Enable the machine learning model for completion by passing the
+`--completion-model` flag pointing to the `bin/model/lexeme` directory in the
+SDK. Defaults to `v:true`, set to `v:false` to disable machine learning
+completion suggestions.
+
+                                                *g:lsc_dart_sdk_path*
+This plugin should auto detect the location of the Dart SDK as long as there
+is a `dart` or `flutter` command available in your `$PATH`. If the detection
+fails set `g:lsc_dart_sdk_path` to the path to the Dart SDK directory. This
+should be the directory above the `/bin/dart` executable. Flutter has it's own
+`dart` executable in addition to the one in the Dart SDK,
+`g:lsc_dart_sdk_path` should be the path for the cached Dart SDK, not the
+flutter SDK. For example, if you are a flutter user and your flutter SDK is
+installed to
+`~/development/flutter` use:
+>
+ let g:lsc_dart_sdk_path = '~/development/flutter/bin/cache/dart-sdk'
+<
+
+COMMANDS                                        *lsc-dart-commands*
+
+                                                *:DartToggleMethodBodyType*
+With the cursor on either a `=>` or a `return` which is the only statement in a
+method, run `:DartToggleMethodBodyType` to flip between an expression bodied
+method (`=>` method) and a block bodied method (a method with `{}` and a
+`return` statement).
+
+                                                *:DartOrganizeImports*
+Runs the "Organize Imports" code action to sort imports in the standard order
+and remove unused mports. The cursor may be anywhere in a Dart file.
+
+                                                *:DartAnalysisServerDiagnostics*
+Ask the Analysis Server to start a web server with a UI showing diagnostics
+about the running server, including configuration and the server's view of file
+contents. The URL on `localhost` for the server will be reported once it is
+running. This may be useful if things are not behaving as expected.
+
+
+ vim:tw=78:sw=4:ts=8:ft=help:norl:
